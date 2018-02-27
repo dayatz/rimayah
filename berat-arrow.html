@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Horsebow Apps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="blue">
+            <div class="nav-wrapper container">
+              <a href="#!" class="brand-logo">HorsebowApp</a>
+              <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="index.html">Memilih Berat Shaft</a></li>
+                <li><a href="berat-arrow.html">Berat Nabl</a></li>
+              </ul>
+              <ul class="side-nav" id="mobile-demo">
+                <li><a href="index.html">Memilih Berat Shaft</a></li>
+                <li><a href="berat-arrow.html">Berat Nabl</a></li>
+              </ul>
+            </div>
+        </nav>
+
+      <div class="content">
+        <span>Menghitung Berat Nabl</span>
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="poundBow" type="number" class="validate" v-model="poundBow">
+                <label for="poundBow">Lbs Busur</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="drawLength" type="number" class="validate" v-model="drawLength">
+                <label for="drawLength">Panjang tarikan (inch)</label>
+              </div>
+              <div class="col s12">
+                  <template v-if="calculateArrowGram9">
+                  <p class="center grey-text">Buat nabl dengan berat total:</p>
+                  <div class="row">
+                    <div class="col s6">
+                      <h4 class="center indigo-text text-darken-4">{{ calculateArrowGram9 }} gram</h4>
+                      <p class="center grey-text">(9 GPP)</p>
+                    </div>
+                    <div class="col s6">
+                      <h4 class="center indigo-text text-darken-4">{{ calculateArrowGram10 }} gram</h4>
+                      <p class="center grey-text">(10 GPP)</p>
+                    </div>
+                  </div>
+                  <p class="center grey-text">dengan panjang nabl <span class="indigo-text text-darken-4" >{{ calculateArrowLength }} inch</span></p>
+                  </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".button-collapse").sideNav();
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                poundBow: 0,
+                drawLength: 0,
+            },
+            computed: {
+                calculateArrowGram9: function() {
+                    var grain = (this.poundBow * 9);
+                    var result = grain * 0.0647989;
+                    if (result) {
+                        return Number((result).toFixed(2));
+                    }
+                    return 0;
+                },
+                calculateArrowGram10: function() {
+                    var grain = (this.poundBow * 10);
+                    var result = grain * 0.0647989;
+                    if (result) {
+                        return Number((result).toFixed(2));
+                    }
+                    return 0;
+                },
+                calculateArrowLength: function() {
+                  return parseInt(this.drawLength) + 0.5;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

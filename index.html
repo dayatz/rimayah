@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Horsebow Apps</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="blue">
+            <div class="nav-wrapper container">
+              <a href="#!" class="brand-logo">HorsebowApp</a>
+              <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="index.html">Memilih Berat Shaft</a></li>
+                <li><a href="berat-arrow.html">Berat Nabl</a></li>
+              </ul>
+              <ul class="side-nav" id="mobile-demo">
+                <li><a href="index.html">Memilih Berat Shaft</a></li>
+                <li><a href="berat-arrow.html">Berat Nabl</a></li>
+              </ul>
+            </div>
+        </nav>
+
+      <div class="content">
+        <span>Memilih berat shaft</span>
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="actual-length" type="number" class="validate" v-model="actualLength">
+                <label for="actual-length">Panjang shaft asli (cm)</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="expected-length" type="number" class="validate" v-model="expectedLength">
+                <label for="expected-length">Panjang shaft yang diinginkan (cm)</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="expected-weight" type="number" class="validate" v-model="expectedWeight">
+                <label for="expected-weight">Berat shaft yang diinginkan (gram)</label>
+              </div>
+              <div class="col s12">
+                    <template v-if="calculateActualWeight">
+                    <p class="center grey-text">Pilih shaft dengan berat:</p>
+                    <h4 class="center indigo-text text-darken-4">{{ calculateActualWeight }} gram</h4>
+                    <p class="center grey-text">dengan panjang {{ actualLength }} cm</p>
+                    </template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.9/vue.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            $(".button-collapse").sideNav();
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                actualLength: 0,
+                expectedLength: 0,
+                expectedWeight: 0
+            },
+            computed: {
+                calculateActualWeight: function() {
+                    var result = (this.actualLength / this.expectedLength * this.expectedWeight);
+                    if (result) {
+                        return Number((result).toFixed(2));
+                    }
+                    return 0;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
